@@ -25,6 +25,7 @@ class Calculator:
 
         return x / y
 
+
     def power(self, x, y):
         self.check_types(x, y)
         return x ** y
