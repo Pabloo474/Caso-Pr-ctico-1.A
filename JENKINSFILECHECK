@@ -1,0 +1,44 @@
+pipeline {
+    agent {label 'ubuntu'}
+    
+    stages {
+        stage('Initialize') {
+            steps {
+                echo 'Starting pipeline...'
+            }
+        }
+        
+        stage('Checkout') {
+            steps {
+                sh 'rm -rf Caso-Pr-ctico-1.A'
+                // Clonar el repositorio de GitHub
+                sh 'git clone https://github.com/Pabloo474/Caso-Pr-ctico-1.A'
+                
+                // Verificar el contenido descargado
+                sh 'ls -la'
+            }
+        }
+        
+        stage('Workspace Info') {
+            steps {
+                // Mostrar el directorio de trabajo (workspace)
+                echo "El espacio de trabajo es: ${env.WORKSPACE}"
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Aquí puedes añadir comandos para construir tu proyecto
+                echo 'Iniciando etapa de Build...'
+                // Puedes añadir comandos específicos de construcción aquí
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Limpieza o acciones posteriores al pipeline
+            echo 'Pipeline completado.'
+        }
+    }
+}
