@@ -7,16 +7,8 @@ pipeline {
             
             steps {
                 // Obtener código del repo
-                git branch:'testing', url:'https://github.com/Pabloo474/Caso-Pr-ctico-1.A'
+                git 'https://github.com/Pabloo474/Caso-Pr-ctico-1.A'
             }
-        }
-
-        stage('Build') {
-           
-           steps {
-              echo 'Eyyy, esto es Python. No hay que compilar nada!!!'
-	          echo WORKSPACE
-           }
         }
 
         stage('Unit') {
@@ -26,18 +18,17 @@ pipeline {
                     bat """
                         SET PYTHONPATH=%WORKSPACE%
                         pytest --junitxml=result-unit.xml test\\unit
+                        coverage run --source=app --omit=app\\__init__.py,app\\api.py -m pytest --junitxml=result-unit.xml test\\unit
                     """
                }
             }
         }   
         
-        stage('Coverage') {
+        stage('Cobertura') {
             
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     bat """
-                        SET PYTHONPATH=%WORKSPACE%
-                        coverage run --source=app --omit=app\\__init__.py,app\\api.py -m pytest test\\unit
                         coverage xml
                     """
                 cobertura autoUpdateHealth: false, 
