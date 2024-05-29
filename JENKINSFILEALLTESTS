@@ -2,15 +2,7 @@ pipeline {
     agent any
 
      stages {
-         
-        stage('Get Code') {
-            
-            steps {
-                // Obtener código del repo
-                git 'https://github.com/Pabloo474/Caso-Pr-ctico-1.A'
-            }
-        }
-
+      
         stage('Unit') {
             
             steps {
